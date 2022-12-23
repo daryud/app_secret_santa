@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_4"
+    tools:context=".MainActivity">
+
+    <include android:id="@+id/include_custom_appbar" layout="@layout/custom_appbar" />
+
+    <TextView
+        android:id="@+id/txt_add_participants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/include_custom_appbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/adicione_os_participantes_do_amigo_oculto"
+        app:layout_constraintVertical_bias="0.2"
+        android:fontFamily="@font/kufam"
+        android:textColor="@color/gray_10"
+        android:textSize="20sp"
+        android:maxWidth="280dp"
+        android:textAlignment="center"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/flactbtn_add_participant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:borderWidth="0dp"
+        android:layout_margin="24dp"
+        android:src="@drawable/ic_plus"
+        android:contentDescription="@string/adicionar_participante"
+        android:backgroundTint="@color/blue_2"
+        app:tint="@color/gray_10"
+        app:maxImageSize="36dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
