@@ -7,4 +7,6 @@
     <string name="adicione_um_nome">Adicione um Nome</string>
     <string name="cancelar">Cancelar</string>
     <string name="concluir">Concluir</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

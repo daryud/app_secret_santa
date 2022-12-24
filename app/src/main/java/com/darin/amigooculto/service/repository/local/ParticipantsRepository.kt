@@ -4,7 +4,7 @@ import android.content.Context
 import com.darin.amigooculto.service.repository.local.database.SecretSantaDatabase
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
 
-class ParticipantsRepository private constructor(context: Context) {
+class ParticipantsRepository(context: Context) {
 
     private val database = SecretSantaDatabase.getDatabase(context).participantDAO()
 
