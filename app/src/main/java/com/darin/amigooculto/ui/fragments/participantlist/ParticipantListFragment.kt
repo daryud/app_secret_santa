@@ -13,7 +13,7 @@ import com.darin.amigooculto.service.repository.local.databasemodels.Participant
 import com.darin.amigooculto.ui.fragments.participantlist.adapters.ParticipantListAdapter
 import com.darin.amigooculto.ui.fragments.participantlist.viewmodels.ParticipantListViewModel
 
-class ParticipantListFragment : Fragment() {
+class ParticipantListFragment(private val onClickDrawnListener: () -> Unit) : Fragment() {
 
     private var _binding: FragmentParticipantListBinding? = null
     private val binding get() = _binding!!
@@ -37,8 +37,12 @@ class ParticipantListFragment : Fragment() {
     ): View {
         _binding = FragmentParticipantListBinding.inflate(inflater, container, false)
 
-        binding.recviewParticipants.layoutManager = LinearLayoutManager(context)
+        binding.recviewParticipants.layoutManager = LinearLayoutManager(requireActivity())
         binding.recviewParticipants.adapter = adapter
+
+        binding.btnRaffle.setOnClickListener {
+            onClickDrawnListener.invoke()
+        }
 
         updateList()
 
@@ -59,9 +63,15 @@ class ParticipantListFragment : Fragment() {
         if(participantList.isNotEmpty()) {
             binding.txtAddParticipants.visibility = View.GONE
             binding.recviewParticipants.visibility = View.VISIBLE
+            if(participantList.count() >= 3) {
+                binding.btnRaffle.visibility = View.VISIBLE
+            } else {
+                binding.btnRaffle.visibility = View.GONE
+            }
         } else {
             binding.txtAddParticipants.visibility = View.VISIBLE
             binding.recviewParticipants.visibility = View.GONE
+            binding.btnRaffle.visibility = View.GONE
         }
     }
 }

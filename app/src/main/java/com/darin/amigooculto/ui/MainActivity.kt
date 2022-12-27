@@ -8,6 +8,7 @@ import com.darin.amigooculto.databinding.ActivityMainBinding
 import com.darin.amigooculto.service.models.listeners.IConcludeOrCancelListener
 import com.darin.amigooculto.ui.components.dialogs.newparticipant.NewParticipantDialog
 import com.darin.amigooculto.ui.fragments.participantlist.ParticipantListFragment
+import com.darin.amigooculto.ui.fragments.raffleslist.RafflesListFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,7 +29,9 @@ class MainActivity : AppCompatActivity() {
             onClickFlactbtnNewParticipant()
         }
 
-        participantListFragment = ParticipantListFragment()
+        participantListFragment = ParticipantListFragment {
+            setFragment(RafflesListFragment())
+        }
 
         setFragment(participantListFragment)
     }
