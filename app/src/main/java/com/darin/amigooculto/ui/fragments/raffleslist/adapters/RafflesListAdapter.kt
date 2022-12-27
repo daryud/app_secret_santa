@@ -11,13 +11,13 @@ import kotlin.concurrent.thread
 class RafflesListAdapter: RecyclerView.Adapter<RafflesListAdapter.RafflesListViewHolder>() {
 
     class RafflesListViewHolder(private val binding: RafflesRowAdapterBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(participant: ParticipantModel) {
-            binding.txtParticipantName.text = participant.name
-            binding.txtFriendName.text = participant.name
+        fun bind(santa: Santa) {
+            binding.txtParticipantName.text = santa.participant
+            binding.txtFriendName.text = santa.santa
         }
     }
 
-    private class Santa(val participant: String, val santa: String)
+    class Santa(val participant: String, val santa: String)
 
     private var participantList: List<ParticipantModel> = listOf()
     private var santaList: List<Santa> = listOf()
@@ -28,17 +28,17 @@ class RafflesListAdapter: RecyclerView.Adapter<RafflesListAdapter.RafflesListVie
     }
 
     override fun onBindViewHolder(holder: RafflesListViewHolder, position: Int) {
-        holder.bind(participantList[position])
+        holder.bind(santaList[position])
     }
 
     override fun getItemCount(): Int {
-        return participantList.count()
+        return santaList.count()
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateList(list: List<ParticipantModel>) {
         participantList = list
-        santaList = raffle(participantList)
+        santaList = raffle(participantList.shuffled())
         notifyDataSetChanged()
     }
 
@@ -49,10 +49,10 @@ class RafflesListAdapter: RecyclerView.Adapter<RafflesListAdapter.RafflesListVie
             do {
                 var done = false
                 val value = participantList.random()
-                if(value.id != participantList[i].id && !santas.any { j -> j.santa == value.name || santas.any { it.participant == j.santa  && it.santa == value.name } }) {
-                    santas.add(Santa(participantList[i].name, value.name))
-                    done = true
-                }
+                    if(value.id != participantList[i].id && !santas.any { j -> j.santa == value.name || santas.any { it.participant == j.santa  && it.santa == value.name } }) {
+                        santas.add(Santa(participantList[i].name, value.name))
+                        done = true
+                    }
             } while (!done)
         }
 
