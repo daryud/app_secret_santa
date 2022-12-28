@@ -57,4 +57,10 @@ class RafflesListFragment : Fragment() {
 
     }
 
+    companion object {
+        fun newInstance(): RafflesListFragment {
+            return RafflesListFragment()
+        }
+    }
+
 }

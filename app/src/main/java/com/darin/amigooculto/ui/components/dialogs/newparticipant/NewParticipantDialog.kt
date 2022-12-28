@@ -15,7 +15,7 @@ import com.darin.amigooculto.service.models.listeners.IConcludeOrCancelListener
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
 import com.darin.amigooculto.ui.components.dialogs.newparticipant.viewmodels.NewParticipantViewModel
 
-class NewParticipantDialog(private val onClickListeners: IConcludeOrCancelListener): DialogFragment() {
+class NewParticipantDialog(): DialogFragment() {
 
     private lateinit var binding: DialogNewParticipantBinding
 
@@ -53,6 +53,15 @@ class NewParticipantDialog(private val onClickListeners: IConcludeOrCancelListen
         }
 
         return dialog
+    }
+
+    companion object {
+        private lateinit var onClickListeners: IConcludeOrCancelListener
+
+        fun newInstance(onClickListeners: IConcludeOrCancelListener): NewParticipantDialog {
+            this.onClickListeners = onClickListeners
+            return NewParticipantDialog()
+        }
     }
 
 }

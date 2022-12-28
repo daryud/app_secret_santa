@@ -29,15 +29,15 @@ class MainActivity : AppCompatActivity() {
             onClickFlactbtnNewParticipant()
         }
 
-        participantListFragment = ParticipantListFragment {
-            setFragment(RafflesListFragment())
+        participantListFragment = ParticipantListFragment.newInstance {
+            setFragment(RafflesListFragment.newInstance())
         }
 
         setFragment(participantListFragment)
     }
 
     private fun onClickFlactbtnNewParticipant() {
-        NewParticipantDialog(object : IConcludeOrCancelListener {
+        NewParticipantDialog.newInstance(object : IConcludeOrCancelListener {
             override fun onConclude() {
                 Toast.makeText(applicationContext, "Adicionado com sucesso!", Toast.LENGTH_SHORT).show()
                 participantListFragment.updateList()

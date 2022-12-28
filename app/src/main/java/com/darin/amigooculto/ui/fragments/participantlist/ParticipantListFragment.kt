@@ -13,7 +13,7 @@ import com.darin.amigooculto.service.repository.local.databasemodels.Participant
 import com.darin.amigooculto.ui.fragments.participantlist.adapters.ParticipantListAdapter
 import com.darin.amigooculto.ui.fragments.participantlist.viewmodels.ParticipantListViewModel
 
-class ParticipantListFragment(private val onClickDrawnListener: () -> Unit) : Fragment() {
+class ParticipantListFragment() : Fragment() {
 
     private var _binding: FragmentParticipantListBinding? = null
     private val binding get() = _binding!!
@@ -72,6 +72,15 @@ class ParticipantListFragment(private val onClickDrawnListener: () -> Unit) : Fr
             binding.txtAddParticipants.visibility = View.VISIBLE
             binding.recviewParticipants.visibility = View.GONE
             binding.btnRaffle.visibility = View.GONE
+        }
+    }
+
+    companion object {
+        private lateinit var onClickDrawnListener: () -> Unit
+
+        fun newInstance(onClickDrawnListener: () -> Unit): ParticipantListFragment {
+            this.onClickDrawnListener = onClickDrawnListener
+            return ParticipantListFragment()
         }
     }
 }

@@ -1,25 +1,29 @@
 package com.darin.amigooculto.ui.fragments.participantlist.adapters
 
 import android.annotation.SuppressLint
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.darin.amigooculto.R
 import com.darin.amigooculto.databinding.ParticipantRowAdapterBinding
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
 
-class ParticipantListAdapter: RecyclerView.Adapter<ParticipantListAdapter.ParticipantListViewHolder>() {
+class ParticipantListAdapter :
+    RecyclerView.Adapter<ParticipantListAdapter.ParticipantListViewHolder>() {
 
     class ParticipantListViewHolder(private val binding: ParticipantRowAdapterBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(participant: ParticipantModel) {
-                binding.txtParticipantName.text = participant.name
-            }
+        fun bind(participant: ParticipantModel) {
+            binding.txtParticipantName.text = participant.name
         }
+    }
 
     private var participantList: List<ParticipantModel> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParticipantListViewHolder {
-        val binding = ParticipantRowAdapterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ParticipantRowAdapterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ParticipantListViewHolder(binding)
     }
 
