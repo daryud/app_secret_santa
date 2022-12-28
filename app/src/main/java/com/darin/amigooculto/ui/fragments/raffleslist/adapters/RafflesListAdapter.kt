@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.darin.amigooculto.databinding.RafflesRowAdapterBinding
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
-import kotlin.concurrent.thread
 
-class RafflesListAdapter: RecyclerView.Adapter<RafflesListAdapter.RafflesListViewHolder>() {
+class RafflesListAdapter : RecyclerView.Adapter<RafflesListAdapter.RafflesListViewHolder>() {
 
-    class RafflesListViewHolder(private val binding: RafflesRowAdapterBinding): RecyclerView.ViewHolder(binding.root) {
+    class RafflesListViewHolder(private val binding: RafflesRowAdapterBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(santa: Santa) {
             binding.txtParticipantName.text = santa.participant
             binding.txtFriendName.text = santa.santa
@@ -23,7 +23,8 @@ class RafflesListAdapter: RecyclerView.Adapter<RafflesListAdapter.RafflesListVie
     private var santaList: List<Santa> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RafflesListViewHolder {
-        val binding = RafflesRowAdapterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            RafflesRowAdapterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RafflesListViewHolder(binding)
     }
 
@@ -46,16 +47,12 @@ class RafflesListAdapter: RecyclerView.Adapter<RafflesListAdapter.RafflesListVie
         val santas = mutableListOf<Santa>()
 
         for (i in participantList.indices) {
-            do {
-                var done = false
-                val value = participantList.random()
-                    if(value.id != participantList[i].id && !santas.any { j -> j.santa == value.name || santas.any { it.participant == j.santa  && it.santa == value.name } }) {
-                        santas.add(Santa(participantList[i].name, value.name))
-                        done = true
-                    }
-            } while (!done)
+            if(i != participantList.size - 1) {
+                santas.add(Santa(participantList[i].name, participantList[i + 1].name))
+            } else {
+                santas.add(Santa(participantList[i].name, participantList[0].name))
+            }
         }
-
 
         return santas
     }
