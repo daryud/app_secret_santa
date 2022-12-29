@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var participantListFragment: ParticipantListFragment
+    private lateinit var rafflesListFragment: RafflesListFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +30,9 @@ class MainActivity : AppCompatActivity() {
             onClickFlactbtnNewParticipant()
         }
 
-        participantListFragment = ParticipantListFragment.newInstance {
-            setFragment(RafflesListFragment.newInstance())
-        }
+        rafflesListFragment = RafflesListFragment.newInstance()
+
+        participantListFragment = ParticipantListFragment.newInstance()
 
         setFragment(participantListFragment)
     }

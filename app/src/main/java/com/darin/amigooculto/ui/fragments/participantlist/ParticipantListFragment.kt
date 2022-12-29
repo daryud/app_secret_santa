@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.darin.amigooculto.R
+import com.darin.amigooculto.databinding.ActivityMainBinding
 import com.darin.amigooculto.databinding.FragmentParticipantListBinding
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
 import com.darin.amigooculto.ui.fragments.participantlist.adapters.ParticipantListAdapter
 import com.darin.amigooculto.ui.fragments.participantlist.viewmodels.ParticipantListViewModel
+import com.darin.amigooculto.ui.fragments.raffleslist.RafflesListFragment
 
 class ParticipantListFragment() : Fragment() {
 
@@ -41,7 +43,8 @@ class ParticipantListFragment() : Fragment() {
         binding.recviewParticipants.adapter = adapter
 
         binding.btnRaffle.setOnClickListener {
-            onClickDrawnListener.invoke()
+            val fragment = RafflesListFragment.newInstance()
+            setFragmentToParentActivity(fragment)
         }
 
         updateList()
@@ -75,11 +78,15 @@ class ParticipantListFragment() : Fragment() {
         }
     }
 
-    companion object {
-        private lateinit var onClickDrawnListener: () -> Unit
+    private fun setFragmentToParentActivity(fragment: Fragment) {
+        val binding = ActivityMainBinding.inflate(LayoutInflater.from(requireActivity()))
+        val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(binding.flMain.id, fragment)
+        fragmentTransaction.commit()
+    }
 
-        fun newInstance(onClickDrawnListener: () -> Unit): ParticipantListFragment {
-            this.onClickDrawnListener = onClickDrawnListener
+    companion object {
+        fun newInstance(): ParticipantListFragment {
             return ParticipantListFragment()
         }
     }

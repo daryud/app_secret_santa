@@ -16,4 +16,18 @@
         tools:listitem="@layout/raffles_row_adapter"
         />
 
+    <Button
+        android:id="@+id/btn_revert_raffle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reverter_sorteio"
+        app:layout_constraintTop_toBottomOf="@id/recview_raffles"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/blue_2"
+        android:fontFamily="@font/kulim_park"
+        android:textStyle="bold"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

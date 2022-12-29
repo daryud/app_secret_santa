@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.darin.amigooculto.R
+import com.darin.amigooculto.databinding.ActivityMainBinding
 import com.darin.amigooculto.databinding.FragmentRafflesListBinding
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
+import com.darin.amigooculto.ui.fragments.participantlist.ParticipantListFragment
 import com.darin.amigooculto.ui.fragments.participantlist.viewmodels.ParticipantListViewModel
 import com.darin.amigooculto.ui.fragments.raffleslist.adapters.RafflesListAdapter
 
@@ -39,6 +41,11 @@ class RafflesListFragment : Fragment() {
         binding.recviewRaffles.layoutManager = LinearLayoutManager(requireActivity())
         binding.recviewRaffles.adapter = adapter
 
+        binding.btnRevertRaffle.setOnClickListener {
+            val fragment = ParticipantListFragment.newInstance()
+            setFragmentToParentActivity(fragment)
+        }
+
         updateList()
 
         return binding.root
@@ -55,6 +62,13 @@ class RafflesListFragment : Fragment() {
 
         adapter.updateList(participantList)
 
+    }
+
+    private fun setFragmentToParentActivity(fragment: Fragment) {
+        val binding = ActivityMainBinding.inflate(LayoutInflater.from(requireActivity()))
+        val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(binding.flMain.id, fragment)
+        fragmentTransaction.commit()
     }
 
     companion object {
