@@ -17,7 +17,7 @@ interface ParticipantDAO {
     fun update(participant: ParticipantModel): Int
 
     @Delete
-    fun delete(participant: ParticipantModel)
+    fun delete(participant: ParticipantModel): Int
 
     @Query("SELECT * FROM participants")
     fun getAll(): List<ParticipantModel>

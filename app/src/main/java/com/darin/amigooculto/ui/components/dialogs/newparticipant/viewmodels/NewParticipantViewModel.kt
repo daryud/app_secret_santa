@@ -13,4 +13,8 @@ class NewParticipantViewModel(application: Application): AndroidViewModel(applic
         return repository.insert(participant)
     }
 
+    fun updateParticipant(participant: ParticipantModel): Boolean {
+        return repository.update(participant)
+    }
+
 }

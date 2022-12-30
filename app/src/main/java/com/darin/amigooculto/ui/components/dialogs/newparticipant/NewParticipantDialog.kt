@@ -2,7 +2,6 @@ package com.darin.amigooculto.ui.components.dialogs.newparticipant
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -15,7 +14,7 @@ import com.darin.amigooculto.service.models.listeners.IConcludeOrCancelListener
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
 import com.darin.amigooculto.ui.components.dialogs.newparticipant.viewmodels.NewParticipantViewModel
 
-class NewParticipantDialog(): DialogFragment() {
+class NewParticipantDialog : DialogFragment() {
 
     private lateinit var binding: DialogNewParticipantBinding
 
@@ -24,6 +23,10 @@ class NewParticipantDialog(): DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DialogNewParticipantBinding.inflate(LayoutInflater.from(context))
         viewModel = ViewModelProvider(requireActivity())[NewParticipantViewModel::class.java]
+
+        if(currentParticipant != null) {
+            binding.edtParticipantName.setText(currentParticipant!!.name)
+        }
 
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
@@ -39,11 +42,19 @@ class NewParticipantDialog(): DialogFragment() {
         binding.btnConcludeNewParticipant.setOnClickListener {
             val participantName = binding.edtParticipantName.text.toString()
 
-            if(participantName.isNotEmpty()) {
-                val success = viewModel.setParticipant(ParticipantModel().apply {
-                    this.name = participantName
-                })
-                if(success) {
+            if (participantName.isNotEmpty()) {
+                var success = false
+                if (currentParticipant == null) {
+                    success = viewModel.setParticipant(ParticipantModel().apply {
+                        this.name = participantName
+                    })
+                } else {
+                    success = viewModel.updateParticipant(currentParticipant!!.apply {
+                        this.name = participantName
+                    })
+                }
+
+                if (success) {
                     onClickListeners.onConclude()
                     dismiss()
                 }
@@ -57,9 +68,19 @@ class NewParticipantDialog(): DialogFragment() {
 
     companion object {
         private lateinit var onClickListeners: IConcludeOrCancelListener
+        private var currentParticipant: ParticipantModel? = null
 
         fun newInstance(onClickListeners: IConcludeOrCancelListener): NewParticipantDialog {
             this.onClickListeners = onClickListeners
+            return NewParticipantDialog()
+        }
+
+        fun newInstance(
+            onClickListeners: IConcludeOrCancelListener,
+            participant: ParticipantModel
+        ): NewParticipantDialog {
+            this.onClickListeners = onClickListeners
+            this.currentParticipant = participant
             return NewParticipantDialog()
         }
     }

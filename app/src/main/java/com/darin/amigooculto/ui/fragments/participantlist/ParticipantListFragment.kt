@@ -1,6 +1,7 @@
 package com.darin.amigooculto.ui.fragments.participantlist
 
 import android.os.Bundle
+import android.os.Handler.Callback
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -40,7 +41,11 @@ class ParticipantListFragment() : Fragment() {
     ): View {
         _binding = FragmentParticipantListBinding.inflate(inflater, container, false)
 
-        adapter = ParticipantListAdapter(requireActivity() as AppCompatActivity)
+        adapter = ParticipantListAdapter(requireActivity() as AppCompatActivity, object : () -> Unit {
+            override fun invoke() {
+                updateList()
+            }
+        })
 
         binding.recviewParticipants.layoutManager = LinearLayoutManager(requireActivity())
         binding.recviewParticipants.adapter = adapter
