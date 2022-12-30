@@ -11,4 +11,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sortear">sortear</string>
     <string name="reverter_sorteio">reverter sorteio</string>
+    <string name="excluir">Excluir</string>
+    <string name="editar">Editar</string>
 </resources>

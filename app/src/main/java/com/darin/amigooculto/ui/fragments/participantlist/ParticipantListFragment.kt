@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.darin.amigooculto.R
@@ -22,7 +23,7 @@ class ParticipantListFragment() : Fragment() {
 
     private lateinit var viewModel: ParticipantListViewModel
 
-    private val adapter = ParticipantListAdapter()
+    private lateinit var adapter: ParticipantListAdapter
 
     private var participantList: List<ParticipantModel> = listOf()
 
@@ -38,6 +39,8 @@ class ParticipantListFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentParticipantListBinding.inflate(inflater, container, false)
+
+        adapter = ParticipantListAdapter(requireActivity() as AppCompatActivity)
 
         binding.recviewParticipants.layoutManager = LinearLayoutManager(requireActivity())
         binding.recviewParticipants.adapter = adapter
