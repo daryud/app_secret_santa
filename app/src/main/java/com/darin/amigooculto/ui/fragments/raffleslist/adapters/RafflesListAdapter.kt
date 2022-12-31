@@ -11,16 +11,19 @@ class RafflesListAdapter : RecyclerView.Adapter<RafflesListAdapter.RafflesListVi
 
     class RafflesListViewHolder(private val binding: RafflesRowAdapterBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(santa: Santa) {
-            binding.txtParticipantName.text = santa.participant
-            binding.txtFriendName.text = santa.santa
+        fun bind(raffled: RaffledSanta) {
+            binding.txtParticipantName.text = raffled.participant.name
+            binding.txtFriendName.text = raffled.santa.name
         }
     }
 
-    class Santa(val participant: String, val santa: String)
+    class RaffledSanta(
+        val participant: ParticipantModel,
+        val santa: ParticipantModel
+    )
 
     private var participantList: List<ParticipantModel> = listOf()
-    private var santaList: List<Santa> = listOf()
+    private var santaList: List<RaffledSanta> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RafflesListViewHolder {
         val binding =
@@ -43,18 +46,18 @@ class RafflesListAdapter : RecyclerView.Adapter<RafflesListAdapter.RafflesListVi
         notifyDataSetChanged()
     }
 
-    private fun raffle(participantList: List<ParticipantModel>): List<Santa> {
-        val santas = mutableListOf<Santa>()
+    private fun raffle(participantList: List<ParticipantModel>): List<RaffledSanta> {
+        val raffled = mutableListOf<RaffledSanta>()
 
         for (i in participantList.indices) {
             if(i != participantList.size - 1) {
-                santas.add(Santa(participantList[i].name, participantList[i + 1].name))
+                raffled.add(RaffledSanta(participantList[i], participantList[i + 1]))
             } else {
-                santas.add(Santa(participantList[i].name, participantList[0].name))
+                raffled.add(RaffledSanta(participantList[i], participantList[0]))
             }
         }
 
-        return santas
+        return raffled.sortedBy { it.participant.id }
     }
 
 }
