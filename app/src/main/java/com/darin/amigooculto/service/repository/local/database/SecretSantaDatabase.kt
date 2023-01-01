@@ -5,12 +5,15 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.darin.amigooculto.service.repository.local.daos.ParticipantDAO
+import com.darin.amigooculto.service.repository.local.daos.SantaDAO
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
+import com.darin.amigooculto.service.repository.local.databasemodels.SantaModel
 
-@Database(entities = [ParticipantModel::class], version = 1)
+@Database(entities = [ParticipantModel::class, SantaModel::class], version = 1)
 abstract class SecretSantaDatabase : RoomDatabase() {
 
     abstract fun participantDAO(): ParticipantDAO
+    abstract fun santaDAO(): SantaDAO
 
     companion object {
         private lateinit var instance: SecretSantaDatabase

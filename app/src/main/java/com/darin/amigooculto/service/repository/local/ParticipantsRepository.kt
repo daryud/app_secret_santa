@@ -22,6 +22,10 @@ class ParticipantsRepository(context: Context) {
         return database.delete(participant) > 0
     }
 
+    fun getParticipant(id: Int): ParticipantModel {
+        return database.getParticipant(id)
+    }
+
     fun getAll(): List<ParticipantModel> {
         return database.getAll()
     }

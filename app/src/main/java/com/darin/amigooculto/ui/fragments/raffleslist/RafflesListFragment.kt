@@ -5,11 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.darin.amigooculto.R
 import com.darin.amigooculto.databinding.ActivityMainBinding
 import com.darin.amigooculto.databinding.FragmentRafflesListBinding
+import com.darin.amigooculto.service.models.objects.RaffledObject
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
 import com.darin.amigooculto.ui.fragments.participantlist.ParticipantListFragment
 import com.darin.amigooculto.ui.fragments.participantlist.viewmodels.ParticipantListViewModel
@@ -22,7 +23,7 @@ class RafflesListFragment : Fragment() {
 
     private lateinit var viewModel: ParticipantListViewModel
 
-    private var participantList: List<ParticipantModel> = listOf()
+    private var raffledList: List<RaffledObject> = listOf()
 
     private val adapter = RafflesListAdapter()
 
@@ -30,6 +31,8 @@ class RafflesListFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProvider(requireActivity())[ParticipantListViewModel::class.java]
+
+        raffledList = viewModel.getRaffledList()
     }
 
     override fun onCreateView(
@@ -42,8 +45,13 @@ class RafflesListFragment : Fragment() {
         binding.recviewRaffles.adapter = adapter
 
         binding.btnRevertRaffle.setOnClickListener {
-            val fragment = ParticipantListFragment.newInstance()
-            setFragmentToParentActivity(fragment)
+            val success = viewModel.clearSantas()
+            if(success) {
+                val fragment = ParticipantListFragment.newInstance()
+                setFragmentToParentActivity(fragment)
+            } else {
+                Toast.makeText(requireActivity(), "Erro ao reverter sorteio!", Toast.LENGTH_SHORT).show()
+            }
         }
 
         updateList()
@@ -58,10 +66,7 @@ class RafflesListFragment : Fragment() {
     }
 
     private fun updateList() {
-        participantList = viewModel.getParticipants()
-
-        adapter.updateList(participantList)
-
+        adapter.updateList(raffledList)
     }
 
     private fun setFragmentToParentActivity(fragment: Fragment) {
