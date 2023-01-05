@@ -29,12 +29,12 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        rafflesListFragment = RafflesListFragment.newInstance()
+        participantListFragment = ParticipantListFragment.newInstance()
+
         binding.flactbtnAddParticipant.setOnClickListener {
             onClickFlactbtnNewParticipant()
         }
-
-        rafflesListFragment = RafflesListFragment.newInstance()
-        participantListFragment = ParticipantListFragment.newInstance()
 
         santasRepository = SantasRepository(this)
 

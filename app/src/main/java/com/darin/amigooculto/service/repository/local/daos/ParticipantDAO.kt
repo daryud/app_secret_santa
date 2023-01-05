@@ -25,4 +25,7 @@ interface ParticipantDAO {
     @Query("SELECT * FROM participants")
     fun getAll(): List<ParticipantModel>
 
+    @Query("SELECT * FROM participants WHERE id <> :id")
+    fun getAllWhereIdIsDifferent(id: Int): List<ParticipantModel>
+
 }

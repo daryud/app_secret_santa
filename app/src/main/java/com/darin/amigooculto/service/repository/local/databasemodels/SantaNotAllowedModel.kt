@@ -7,24 +7,26 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "santas", foreignKeys = [
+    tableName = "santas_not_allowed", foreignKeys = [
         ForeignKey(
             entity = ParticipantModel::class,
             childColumns = ["participant_id"],
-            parentColumns = ["id"]
+            parentColumns = ["id"],
+            onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
             entity = ParticipantModel::class,
-            childColumns = ["santa_id"],
-            parentColumns = ["id"]
+            childColumns = ["not_allowed_id"],
+            parentColumns = ["id"],
+            onDelete = ForeignKey.CASCADE
         )
     ],
     indices = [
         Index("participant_id"),
-        Index("santa_id")
+        Index("not_allowed_id")
     ]
 )
-class SantaModel {
+class SantaNotAllowedModel {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -33,7 +35,7 @@ class SantaModel {
     @ColumnInfo(name = "participant_id")
     var participantId: Int = 0
 
-    @ColumnInfo(name = "santa_id")
-    var santaId: Int = 0
+    @ColumnInfo(name = "not_allowed_id")
+    var notAllowedId: Int = 0
 
 }

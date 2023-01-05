@@ -29,18 +29,14 @@ class ParticipantListFragment : Fragment() {
 
     private var participantList: List<ParticipantModel> = listOf()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProvider(requireActivity())[ParticipantListViewModel::class.java]
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentParticipantListBinding.inflate(inflater, container, false)
+
+        viewModel = ViewModelProvider(requireActivity())[ParticipantListViewModel::class.java]
 
         adapter =
             ParticipantListAdapter(requireActivity() as AppCompatActivity, object : () -> Unit {
@@ -98,18 +94,20 @@ class ParticipantListFragment : Fragment() {
     }
 
     private fun carryOutDraw(participantList: List<ParticipantModel>) {
+        val shuffledList = participantList.shuffled()
+
         val raffled = mutableListOf<RaffledObject>()
 
-        for (i in participantList.indices) {
-            if (i != participantList.size - 1) {
+        for (i in shuffledList.indices) {
+            if (i != shuffledList.size - 1) {
                 raffled.add(
                     RaffledObject(
-                        participantList[i],
-                        participantList[i + 1]
+                        shuffledList[i],
+                        shuffledList[i + 1]
                     )
                 )
             } else {
-                raffled.add(RaffledObject(participantList[i], participantList[0]))
+                raffled.add(RaffledObject(shuffledList[i], shuffledList[0]))
             }
         }
 

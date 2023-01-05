@@ -70,6 +70,15 @@
                 app:layout_constraintStart_toEndOf="@id/btn_exclude_participant"
                 app:layout_constraintTop_toTopOf="@id/btn_exclude_participant" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recview_friends"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/btn_edit_participant"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

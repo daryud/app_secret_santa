@@ -30,4 +30,8 @@ class ParticipantsRepository(context: Context) {
         return database.getAll()
     }
 
+    fun getAllWhereIdIsDifferent(id: Int): List<ParticipantModel> {
+        return database.getAllWhereIdIsDifferent(id)
+    }
+
 }

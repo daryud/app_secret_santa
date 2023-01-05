@@ -9,15 +9,19 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.darin.amigooculto.databinding.DialogParticipantOptionsBinding
 import com.darin.amigooculto.service.models.listeners.IExcludeOrEditListener
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
+import com.darin.amigooculto.ui.components.dialogs.participantoptions.adapters.FriendsAdapter
 import com.darin.amigooculto.ui.components.dialogs.participantoptions.viewmodels.ParticipantOptionsViewModel
 
 class ParticipantOptionsDialog : DialogFragment() {
 
     private lateinit var binding: DialogParticipantOptionsBinding
     private lateinit var viewModel: ParticipantOptionsViewModel
+
+    private val adapter = FriendsAdapter()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -27,6 +31,7 @@ class ParticipantOptionsDialog : DialogFragment() {
         binding.txtParticipantName.text = participant.name
 
         setListeners()
+        fillFriends()
 
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
@@ -52,6 +57,15 @@ class ParticipantOptionsDialog : DialogFragment() {
             onClickListeners.onEdit()
             dismiss()
         }
+    }
+
+    private fun fillFriends() {
+        binding.recviewFriends.layoutManager = LinearLayoutManager(context)
+        binding.recviewFriends.adapter = adapter
+
+        val friends = viewModel.getAllWhereIdIsDifferent(participant.id)
+
+        adapter.updateList(friends)
     }
 
     companion object {

@@ -13,4 +13,8 @@ class ParticipantOptionsViewModel(application: Application): AndroidViewModel(ap
         return repository.delete(participant.id)
     }
 
+    fun getAllWhereIdIsDifferent(id: Int): List<ParticipantModel> {
+        return repository.getAllWhereIdIsDifferent(id)
+    }
+
 }
