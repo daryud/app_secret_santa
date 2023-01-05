@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.darin.amigooculto.databinding.DialogParticipantOptionsBinding
 import com.darin.amigooculto.service.models.listeners.IExcludeOrEditListener
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
+import com.darin.amigooculto.service.repository.local.databasemodels.SantaNotAllowedModel
 import com.darin.amigooculto.ui.components.dialogs.participantoptions.adapters.FriendsAdapter
+import com.darin.amigooculto.ui.components.dialogs.participantoptions.listeners.IOnClickCheck
 import com.darin.amigooculto.ui.components.dialogs.participantoptions.viewmodels.ParticipantOptionsViewModel
 
 class ParticipantOptionsDialog : DialogFragment() {
@@ -64,6 +67,31 @@ class ParticipantOptionsDialog : DialogFragment() {
         binding.recviewFriends.adapter = adapter
 
         val friends = viewModel.getAllWhereIdIsDifferent(participant.id)
+
+        adapter.attachListeners(object : IOnClickCheck {
+            override fun onCheck(checkBox: CheckBox, santaNotAllowedId: Int) {
+                val success = viewModel.deleteSantaNotAllowed(participant.id, santaNotAllowedId)
+                if(!success) {
+                    checkBox.isChecked = false
+                    Toast.makeText(requireActivity(), "Erro ao adicionar amigo na lista do participante!", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onUncheck(checkBox: CheckBox, santaNotAllowedId: Int) {
+                val santaNotAllowed = SantaNotAllowedModel().apply {
+                    this.participantId = participant.id
+                    this.notAllowedId = santaNotAllowedId
+                }
+                val success = viewModel.insertSantaNotAllowed(santaNotAllowed)
+                if(!success) {
+                    checkBox.isChecked = true
+                    Toast.makeText(requireActivity(), "Erro ao remover amigo da lista do participante!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+
+        val listOfNotAllowed = viewModel.getListOfNotAllowed(participant.id)
+        adapter.attachListOfNotAllowed(listOfNotAllowed)
 
         adapter.updateList(friends)
     }
