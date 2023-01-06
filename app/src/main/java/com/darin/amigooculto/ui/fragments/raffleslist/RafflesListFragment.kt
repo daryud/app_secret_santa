@@ -47,7 +47,7 @@ class RafflesListFragment : Fragment() {
         binding.btnRevertRaffle.setOnClickListener {
             val success = viewModel.clearSantas()
             if(success) {
-                val fragment = ParticipantListFragment.newInstance()
+                val fragment = ParticipantListFragment.getInstance()
                 setFragmentToParentActivity(fragment)
             } else {
                 Toast.makeText(requireActivity(), "Erro ao reverter sorteio!", Toast.LENGTH_SHORT).show()

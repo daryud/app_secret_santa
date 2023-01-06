@@ -94,20 +94,43 @@ class ParticipantListFragment : Fragment() {
     }
 
     private fun carryOutDraw(participantList: List<ParticipantModel>) {
-        val shuffledList = participantList.shuffled()
+
+        val shuffledList: MutableList<ParticipantModel> = participantList.shuffled() as MutableList<ParticipantModel>
+
+        fun reorderShuffledList(indexOfNext: Int) {
+            val lastShuffled = shuffledList.removeLast()
+            shuffledList.add(indexOfNext, lastShuffled)
+        }
 
         val raffled = mutableListOf<RaffledObject>()
 
         for (i in shuffledList.indices) {
-            if (i != shuffledList.size - 1) {
-                raffled.add(
-                    RaffledObject(
-                        shuffledList[i],
-                        shuffledList[i + 1]
-                    )
-                )
-            } else {
-                raffled.add(RaffledObject(shuffledList[i], shuffledList[0]))
+            val listOfNotAllowed = viewModel.getListOfNotAllowed(shuffledList[i].id)
+
+            var proceed = false
+
+            while (!proceed) {
+                val lastShuffledNotAlloweds = viewModel.getListOfNotAllowed(shuffledList.last().id)
+                if(lastShuffledNotAlloweds.contains(shuffledList.first().id)) {
+                    reorderShuffledList(i + 1)
+                    continue
+                }
+                if (i != shuffledList.size - 1) {
+                    if(!listOfNotAllowed.contains(shuffledList[i + 1].id)) {
+                        raffled.add(
+                            RaffledObject(
+                                shuffledList[i],
+                                shuffledList[i + 1]
+                            )
+                        )
+                        proceed = true
+                    } else {
+                        reorderShuffledList(i + 1)
+                    }
+                } else {
+                    raffled.add(RaffledObject(shuffledList[i], shuffledList[0]))
+                    proceed = true
+                }
             }
         }
 
@@ -126,8 +149,16 @@ class ParticipantListFragment : Fragment() {
     }
 
     companion object {
+
+        private lateinit var instance: ParticipantListFragment
+
         fun newInstance(): ParticipantListFragment {
-            return ParticipantListFragment()
+            instance = ParticipantListFragment()
+            return instance
+        }
+
+        fun getInstance(): ParticipantListFragment {
+            return instance
         }
     }
 }
