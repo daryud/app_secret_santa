@@ -72,6 +72,7 @@ class NewParticipantDialog : DialogFragment() {
 
         fun newInstance(onClickListeners: IConcludeOrCancelListener): NewParticipantDialog {
             this.onClickListeners = onClickListeners
+            this.currentParticipant = null
             return NewParticipantDialog()
         }
 
