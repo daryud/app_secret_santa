@@ -13,4 +13,6 @@
     <string name="reverter_sorteio">reverter sorteio</string>
     <string name="excluir">Excluir</string>
     <string name="editar">Editar</string>
+    <string name="atencao">Atenção!</string>
+    <string name="ok">ok</string>
 </resources>

@@ -1,20 +1,29 @@
 package com.darin.amigooculto.ui.fragments.raffleslist.adapters
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.darin.amigooculto.databinding.RafflesRowAdapterBinding
 import com.darin.amigooculto.service.models.objects.RaffledObject
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
+import com.darin.amigooculto.ui.components.dialogs.information.InformationDialog
 
-class RafflesListAdapter : RecyclerView.Adapter<RafflesListAdapter.RafflesListViewHolder>() {
+class RafflesListAdapter(private val activityContext: AppCompatActivity) : RecyclerView.Adapter<RafflesListAdapter.RafflesListViewHolder>() {
 
     class RafflesListViewHolder(private val binding: RafflesRowAdapterBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(raffled: RaffledObject) {
+        fun bind(raffled: RaffledObject, activityContext: AppCompatActivity) {
             binding.txtParticipantName.text = raffled.participant.name
             binding.txtFriendName.text = raffled.santa.name
+
+            binding.llRafflesRow.setOnLongClickListener {
+                InformationDialog.newInstance("Seu amigo oculto é:\n\n${raffled.santa.name}").show(activityContext.supportFragmentManager, "informative_dialog")
+                true
+            }
+
         }
     }
 
@@ -27,7 +36,7 @@ class RafflesListAdapter : RecyclerView.Adapter<RafflesListAdapter.RafflesListVi
     }
 
     override fun onBindViewHolder(holder: RafflesListViewHolder, position: Int) {
-        holder.bind(raffledList[position])
+        holder.bind(raffledList[position], activityContext)
     }
 
     override fun getItemCount(): Int {

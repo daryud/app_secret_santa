@@ -6,15 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.darin.amigooculto.R
 import com.darin.amigooculto.databinding.ActivityMainBinding
 import com.darin.amigooculto.databinding.FragmentRafflesListBinding
 import com.darin.amigooculto.service.models.objects.RaffledObject
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
+import com.darin.amigooculto.ui.components.dialogs.information.InformationDialog
 import com.darin.amigooculto.ui.fragments.participantlist.ParticipantListFragment
 import com.darin.amigooculto.ui.fragments.participantlist.viewmodels.ParticipantListViewModel
 import com.darin.amigooculto.ui.fragments.raffleslist.adapters.RafflesListAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class RafflesListFragment : Fragment() {
 
@@ -25,10 +29,12 @@ class RafflesListFragment : Fragment() {
 
     private var raffledList: List<RaffledObject> = listOf()
 
-    private val adapter = RafflesListAdapter()
+    private lateinit var adapter: RafflesListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        adapter = RafflesListAdapter(requireActivity() as AppCompatActivity)
 
         viewModel = ViewModelProvider(requireActivity())[ParticipantListViewModel::class.java]
 
@@ -40,6 +46,9 @@ class RafflesListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRafflesListBinding.inflate(inflater, container, false)
+
+        val myActivityFloatingButton = requireActivity().findViewById<FloatingActionButton>(R.id.flactbtn_add_participant)
+        myActivityFloatingButton.visibility = View.GONE
 
         binding.recviewRaffles.layoutManager = LinearLayoutManager(requireActivity())
         binding.recviewRaffles.adapter = adapter
@@ -55,6 +64,8 @@ class RafflesListFragment : Fragment() {
         }
 
         updateList()
+
+        InformationDialog.newInstance("Clique e segure em um participante para ver o amigo oculto correspondente").show(requireActivity().supportFragmentManager, "informative_dialog")
 
         return binding.root
     }

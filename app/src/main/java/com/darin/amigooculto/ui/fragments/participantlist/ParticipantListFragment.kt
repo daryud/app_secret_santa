@@ -10,15 +10,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.darin.amigooculto.R
 import com.darin.amigooculto.databinding.ActivityMainBinding
 import com.darin.amigooculto.databinding.FragmentParticipantListBinding
 import com.darin.amigooculto.service.models.objects.RaffledObject
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
 import com.darin.amigooculto.service.repository.local.databasemodels.SantaModel
+import com.darin.amigooculto.ui.MainActivity
 import com.darin.amigooculto.ui.fragments.participantlist.adapters.ParticipantListAdapter
 import com.darin.amigooculto.ui.fragments.participantlist.objects.ParticipantModelWithConstraints
 import com.darin.amigooculto.ui.fragments.participantlist.viewmodels.ParticipantListViewModel
 import com.darin.amigooculto.ui.fragments.raffleslist.RafflesListFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ParticipantListFragment : Fragment() {
 
@@ -37,6 +40,9 @@ class ParticipantListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentParticipantListBinding.inflate(inflater, container, false)
+
+        val myActivityFloatingButton = requireActivity().findViewById<FloatingActionButton>(R.id.flactbtn_add_participant)
+        myActivityFloatingButton.visibility = View.VISIBLE
 
         viewModel = ViewModelProvider(requireActivity())[ParticipantListViewModel::class.java]
 
