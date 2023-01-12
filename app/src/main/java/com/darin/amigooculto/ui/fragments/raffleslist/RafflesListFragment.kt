@@ -65,7 +65,7 @@ class RafflesListFragment : Fragment() {
 
         updateList()
 
-        InformationDialog.newInstance("Clique e segure em um participante para ver o amigo oculto correspondente").show(requireActivity().supportFragmentManager, "informative_dialog")
+        InformationDialog.newInstance("Toque e segure em seu nome para revelar seu amigo oculto!").show(requireActivity().supportFragmentManager, "informative_dialog")
 
         return binding.root
     }

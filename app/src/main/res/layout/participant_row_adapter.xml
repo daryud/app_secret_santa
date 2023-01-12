@@ -12,6 +12,7 @@
         android:layout_marginHorizontal="12dp"
         android:layout_marginVertical="8dp"
         android:background="@drawable/participant_cardview_style"
+        android:foreground="?attr/selectableItemBackground"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

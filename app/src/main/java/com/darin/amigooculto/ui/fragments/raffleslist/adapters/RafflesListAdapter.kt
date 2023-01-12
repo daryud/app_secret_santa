@@ -10,6 +10,7 @@ import com.darin.amigooculto.databinding.RafflesRowAdapterBinding
 import com.darin.amigooculto.service.models.objects.RaffledObject
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
 import com.darin.amigooculto.ui.components.dialogs.information.InformationDialog
+import com.darin.amigooculto.ui.components.dialogs.mysanta.MySantaDialog
 
 class RafflesListAdapter(private val activityContext: AppCompatActivity) : RecyclerView.Adapter<RafflesListAdapter.RafflesListViewHolder>() {
 
@@ -20,7 +21,7 @@ class RafflesListAdapter(private val activityContext: AppCompatActivity) : Recyc
             binding.txtFriendName.text = raffled.santa.name
 
             binding.llRafflesRow.setOnLongClickListener {
-                InformationDialog.newInstance("Seu amigo oculto é:\n\n${raffled.santa.name}").show(activityContext.supportFragmentManager, "informative_dialog")
+                MySantaDialog.newInstance(raffled.participant.name, raffled.santa.name).show(activityContext.supportFragmentManager, "my_santa_dialog")
                 true
             }
 

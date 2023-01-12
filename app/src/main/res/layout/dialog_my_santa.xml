@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:backgroundTint="@color/blue_4"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="2dp"
+    android:layout_margin="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
+
+        <View
+            android:id="@+id/view_title"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:background="@color/blue_3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kulim_park"
+            android:text="Katarina"
+            android:textColor="@color/gray_10"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/view_title"
+            app:layout_constraintEnd_toEndOf="@id/view_title"
+            app:layout_constraintStart_toStartOf="@id/view_title"
+            app:layout_constraintTop_toTopOf="@id/view_title"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/txt_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/view_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Seu amigo oculto é:"
+            android:textAlignment="center"
+            tools:ignore="HardcodedText"
+            android:textSize="18sp"
+            android:layout_marginVertical="16dp"
+            android:paddingHorizontal="16dp"
+            android:textColor="@color/gray_10"
+            />
+
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/txt_santa_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/txt_information"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Joelma"
+            android:textColor="@color/gray_10"
+            android:textSize="20sp"
+            android:textAllCaps="true"
+            android:layout_marginTop="8dp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/txt_santa_name_mask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/txt_information"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/toque_para_revelar"
+            android:background="@drawable/bg_reveal_santa"
+            android:textColor="@color/gray_10"
+            android:textSize="20sp"
+            android:textAllCaps="true"
+            android:layout_marginTop="8dp"
+            android:paddingVertical="4dp"
+            android:paddingHorizontal="12dp"
+            tools:ignore="HardcodedText"
+            android:textStyle="bold"
+            />
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/ok"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_santa_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
