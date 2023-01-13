@@ -19,6 +19,14 @@ class ParticipantListViewModel(application: Application): AndroidViewModel(appli
         return participantsRepository.getAll()
     }
 
+    fun updateParticipantSantaStatus(participant: ParticipantModel): Boolean {
+        return participantsRepository.update(participant)
+    }
+
+    fun resetAllParticipantSantaStatus(): Boolean {
+        return participantsRepository.resetAllParticipantSantaStatus()
+    }
+
     fun insertAllSantas(santaList: List<SantaModel>): Boolean {
         return santasRepository.insert(santaList)
     }

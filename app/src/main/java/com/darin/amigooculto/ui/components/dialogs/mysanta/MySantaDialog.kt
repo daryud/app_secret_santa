@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.fragment.app.DialogFragment
 import com.darin.amigooculto.databinding.DialogMySantaBinding
+import com.darin.amigooculto.ui.components.dialogs.mysanta.listeners.IOnRevealSanta
 
 class MySantaDialog: DialogFragment() {
 
@@ -23,6 +24,7 @@ class MySantaDialog: DialogFragment() {
         binding.txtSantaName.text = santa
         binding.txtSantaNameMask.setOnClickListener {
             it.visibility = View.GONE
+            listeners.onReveal()
         }
 
         val builder = AlertDialog.Builder(requireActivity())
@@ -40,10 +42,12 @@ class MySantaDialog: DialogFragment() {
 
         private var participant = ""
         private var santa = ""
+        private lateinit var listeners: IOnRevealSanta
 
-        fun newInstance(participant: String, santa: String): MySantaDialog {
+        fun newInstance(participant: String, santa: String, listeners: IOnRevealSanta): MySantaDialog {
             this.participant = participant
             this.santa = santa
+            this.listeners = listeners
             return MySantaDialog()
         }
 

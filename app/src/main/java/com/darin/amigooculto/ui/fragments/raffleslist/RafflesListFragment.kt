@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.darin.amigooculto.R
 import com.darin.amigooculto.databinding.ActivityMainBinding
 import com.darin.amigooculto.databinding.FragmentRafflesListBinding
+import com.darin.amigooculto.service.constants.ParticipantModelConstants
 import com.darin.amigooculto.service.models.objects.RaffledObject
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
 import com.darin.amigooculto.ui.components.dialogs.information.InformationDialog
@@ -34,9 +35,19 @@ class RafflesListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        adapter = RafflesListAdapter(requireActivity() as AppCompatActivity)
-
         viewModel = ViewModelProvider(requireActivity())[ParticipantListViewModel::class.java]
+
+        adapter = RafflesListAdapter(requireActivity() as AppCompatActivity, object : (ParticipantModel) -> Unit {
+
+            override fun invoke(participant: ParticipantModel) {
+                viewModel.updateParticipantSantaStatus(participant.apply {
+                    this.santaStatus = ParticipantModelConstants.SantaStatus.VISUALIZED
+                })
+                raffledList = viewModel.getRaffledList()
+                updateList()
+            }
+
+        })
 
         raffledList = viewModel.getRaffledList()
     }
@@ -56,6 +67,7 @@ class RafflesListFragment : Fragment() {
         binding.btnRevertRaffle.setOnClickListener {
             val success = viewModel.clearSantas()
             if(success) {
+                viewModel.resetAllParticipantSantaStatus()
                 val fragment = ParticipantListFragment.getInstance()
                 setFragmentToParentActivity(fragment)
             } else {

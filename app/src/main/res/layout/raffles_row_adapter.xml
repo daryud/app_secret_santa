@@ -43,15 +43,13 @@
                 app:layout_constraintTop_toBottomOf="@id/txt_participant_name"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="8dp"
-                android:visibility="gone"
                 />
 
             <TextView
-                android:visibility="gone"
-                android:id="@+id/txt_friend_name"
+                android:id="@+id/txt_santa_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Carlos Lacerda"
+                android:text="Visualizado"
                 android:textSize="16sp"
                 android:fontFamily="@font/kulim_park"
                 android:textColor="@color/gray_10"

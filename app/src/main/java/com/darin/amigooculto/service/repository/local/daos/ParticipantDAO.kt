@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.darin.amigooculto.service.constants.ParticipantModelConstants
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
 
 @Dao
@@ -27,5 +28,8 @@ interface ParticipantDAO {
 
     @Query("SELECT * FROM participants WHERE id <> :id")
     fun getAllWhereIdIsDifferent(id: Int): List<ParticipantModel>
+
+    @Query("UPDATE participants SET santa_status = '${ParticipantModelConstants.SantaStatus.NOT_VISUALIZED}'")
+    fun resetAllParticipantSantaStatus(): Int
 
 }

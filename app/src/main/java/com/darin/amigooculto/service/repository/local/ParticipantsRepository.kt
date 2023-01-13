@@ -34,4 +34,8 @@ class ParticipantsRepository(context: Context) {
         return database.getAllWhereIdIsDifferent(id)
     }
 
+    fun resetAllParticipantSantaStatus(): Boolean {
+        return database.resetAllParticipantSantaStatus() > 0
+    }
+
 }

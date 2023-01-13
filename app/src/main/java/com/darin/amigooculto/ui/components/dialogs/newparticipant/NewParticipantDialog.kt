@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.darin.amigooculto.databinding.DialogNewParticipantBinding
+import com.darin.amigooculto.service.constants.ParticipantModelConstants
 import com.darin.amigooculto.service.models.listeners.IConcludeOrCancelListener
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
 import com.darin.amigooculto.ui.components.dialogs.newparticipant.viewmodels.NewParticipantViewModel
@@ -47,6 +48,7 @@ class NewParticipantDialog : DialogFragment() {
                 if (currentParticipant == null) {
                     success = viewModel.setParticipant(ParticipantModel().apply {
                         this.name = participantName
+                        this.santaStatus = ParticipantModelConstants.SantaStatus.NOT_VISUALIZED
                     })
                 } else {
                     success = viewModel.updateParticipant(currentParticipant!!.apply {
