@@ -13,7 +13,7 @@ import com.darin.amigooculto.service.repository.local.databasemodels.Participant
 import com.darin.amigooculto.service.repository.local.databasemodels.SantaModel
 import com.darin.amigooculto.service.repository.local.databasemodels.SantaNotAllowedModel
 
-@Database(entities = [ParticipantModel::class, SantaModel::class, SantaNotAllowedModel::class], exportSchema = false, version = 1)
+@Database(entities = [ParticipantModel::class, SantaModel::class, SantaNotAllowedModel::class], exportSchema = true, version = 1)
 abstract class SecretSantaDatabase : RoomDatabase() {
 
     abstract fun participantDAO(): ParticipantDAO
