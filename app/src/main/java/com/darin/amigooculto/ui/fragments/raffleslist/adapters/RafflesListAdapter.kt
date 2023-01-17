@@ -1,6 +1,7 @@
 package com.darin.amigooculto.ui.fragments.raffleslist.adapters
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import com.darin.amigooculto.databinding.RafflesRowAdapterBinding
 import com.darin.amigooculto.service.constants.ParticipantModelConstants
 import com.darin.amigooculto.service.models.objects.RaffledObject
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
+import com.darin.amigooculto.service.utils.AESEncryption
 import com.darin.amigooculto.ui.components.dialogs.mysanta.MySantaDialog
 import com.darin.amigooculto.ui.components.dialogs.mysanta.listeners.IOnRevealSanta
 
@@ -19,6 +21,14 @@ class RafflesListAdapter(private val activityContext: AppCompatActivity, private
         fun bind(raffled: RaffledObject, activityContext: AppCompatActivity) {
             binding.txtParticipantName.text = raffled.participant.name
             binding.txtSantaStatus.text = raffled.participant.santaStatus
+
+            binding.llRafflesRow.setOnClickListener {
+                val intent = Intent()
+                intent.action = Intent.ACTION_SEND
+                intent.putExtra(Intent.EXTRA_TEXT, "Use o código a seguir para revelar o seu amigo secreto: ${AESEncryption.encrypt(raffled.santa.name)}")
+                intent.type = "text/plain"
+                activityContext.startActivity(Intent.createChooser(intent, "share_to"))
+            }
 
             if(raffled.participant.santaStatus == ParticipantModelConstants.SantaStatus.NOT_VISUALIZED){
 
