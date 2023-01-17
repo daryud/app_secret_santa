@@ -16,14 +16,26 @@ class ParticipantsRepository(context: Context) {
         return database.update(participant) > 0
     }
 
-    fun delete(id: Int) {
+    fun delete(id: Int): Boolean {
         val participant = ParticipantModel()
         participant.id = id
-        database.delete(participant)
+        return database.delete(participant) > 0
+    }
+
+    fun getParticipant(id: Int): ParticipantModel {
+        return database.getParticipant(id)
     }
 
     fun getAll(): List<ParticipantModel> {
         return database.getAll()
+    }
+
+    fun getAllWhereIdIsDifferent(id: Int): List<ParticipantModel> {
+        return database.getAllWhereIdIsDifferent(id)
+    }
+
+    fun resetAllParticipantSantaStatus(): Boolean {
+        return database.resetAllParticipantSantaStatus() > 0
     }
 
 }
