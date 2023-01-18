@@ -8,5 +8,10 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="actionOverflowButtonStyle">@style/ThreeDotsMenuColor</item>
+    </style>
+
+    <style name="ThreeDotsMenuColor" parent="Widget.AppCompat.Light.ActionButton.Overflow">
+        <item name="tint">@color/gray_10</item>
     </style>
 </resources>

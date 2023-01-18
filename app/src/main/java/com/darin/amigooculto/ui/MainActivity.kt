@@ -2,8 +2,10 @@ package com.darin.amigooculto.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.darin.amigooculto.R
 import com.darin.amigooculto.databinding.ActivityMainBinding
 import com.darin.amigooculto.service.models.listeners.IConcludeOrCancelListener
 import com.darin.amigooculto.service.repository.local.SantasRepository
@@ -45,6 +47,11 @@ class MainActivity : AppCompatActivity() {
             setFragment(participantListFragment)
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_action, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     private fun onClickFlactbtnNewParticipant() {
