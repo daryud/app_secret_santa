@@ -3,6 +3,7 @@ package com.darin.amigooculto.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.darin.amigooculto.R
@@ -10,6 +11,7 @@ import com.darin.amigooculto.databinding.ActivityMainBinding
 import com.darin.amigooculto.service.models.listeners.IConcludeOrCancelListener
 import com.darin.amigooculto.service.repository.local.SantasRepository
 import com.darin.amigooculto.ui.components.dialogs.newparticipant.NewParticipantDialog
+import com.darin.amigooculto.ui.components.dialogs.revealsanta.RevealSantaDialog
 import com.darin.amigooculto.ui.fragments.participantlist.ParticipantListFragment
 import com.darin.amigooculto.ui.fragments.raffleslist.RafflesListFragment
 
@@ -52,6 +54,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_action, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.menu_item_reveal_santa -> {
+                RevealSantaDialog.newInstance().show(supportFragmentManager, "reveal_santa_dialog")
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun onClickFlactbtnNewParticipant() {

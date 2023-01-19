@@ -17,4 +17,7 @@
     <string name="ok">ok</string>
     <string name="toque_para_revelar">toque para revelar</string>
     <string name="revelar_amigo_oculto">Revelar amigo oculto</string>
+    <string name="revelar_amigo_secreto">Revelar Amigo Secreto</string>
+    <string name="insira_o_codigo">Insira o Código</string>
+    <string name="revelar">revelar</string>
 </resources>

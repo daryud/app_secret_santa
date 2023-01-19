@@ -59,6 +59,21 @@
                 android:layout_marginStart="8dp"
                 tools:ignore="HardcodedText" />
 
+            <ImageView
+                android:id="@+id/iv_share_santa_code"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:src="@drawable/ic_share"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:backgroundTint="@color/blue_5"
+                app:tint="@color/gray_10"
+                android:contentDescription="share_button"
+                tools:ignore="HardcodedText"
+                android:paddingHorizontal="8dp"
+                android:foreground="?attr/selectableItemBackground"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

@@ -22,7 +22,7 @@ class RafflesListAdapter(private val activityContext: AppCompatActivity, private
             binding.txtParticipantName.text = raffled.participant.name
             binding.txtSantaStatus.text = raffled.participant.santaStatus
 
-            binding.llRafflesRow.setOnClickListener {
+            binding.ivShareSantaCode.setOnClickListener {
                 val intent = Intent()
                 intent.action = Intent.ACTION_SEND
                 intent.putExtra(Intent.EXTRA_TEXT, "Use o código a seguir para revelar o seu amigo secreto: ${AESEncryption.encrypt(raffled.santa.name)}")

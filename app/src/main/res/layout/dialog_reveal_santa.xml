@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:backgroundTint="@color/blue_4"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="2dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
+
+        <View
+            android:id="@+id/view_title"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:background="@color/blue_3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kulim_park"
+            android:text="@string/revelar_amigo_secreto"
+            android:textColor="@color/gray_10"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/view_title"
+            app:layout_constraintEnd_toEndOf="@id/view_title"
+            app:layout_constraintStart_toStartOf="@id/view_title"
+            app:layout_constraintTop_toTopOf="@id/view_title"
+
+            />
+
+        <EditText
+            android:id="@+id/edt_santas_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginVertical="24dp"
+            android:autofillHints="null"
+            android:hint="@string/insira_o_codigo"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textColor="@color/gray_10"
+            android:textColorHint="@color/gray_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_title" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llc_revealed_santa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginVertical="16dp"
+            android:orientation="vertical"
+            android:paddingBottom="24dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_title">
+
+            <TextView
+                android:id="@+id/txt_information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:text="Seu amigo oculto é:"
+                android:textAlignment="center"
+                android:textColor="@color/gray_10"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_title"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/txt_santa_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:text="Joelma"
+                android:textAllCaps="true"
+                android:textColor="@color/gray_10"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_information"
+                tools:ignore="HardcodedText" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <Button
+            android:id="@+id/btn_cancell_reveal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="36dp"
+            android:minWidth="120dp"
+            android:text="@string/cancelar"
+            app:layout_constraintEnd_toStartOf="@id/btn_reveal_santa"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edt_santas_code" />
+
+        <Button
+            android:id="@+id/btn_reveal_santa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:minWidth="120dp"
+            android:text="@string/revelar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_cancell_reveal"
+            app:layout_constraintTop_toTopOf="@id/btn_cancell_reveal" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
