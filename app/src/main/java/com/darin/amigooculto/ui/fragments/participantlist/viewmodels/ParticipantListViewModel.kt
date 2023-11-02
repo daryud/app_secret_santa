@@ -42,4 +42,8 @@ class ParticipantListViewModel(application: Application): AndroidViewModel(appli
     fun getListOfNotAllowed(id: Int): List<Int> {
         return santasNotAllowedRepository.getAllNotAllowed(id)
     }
+
+    fun getListOfAllowed(id: Int): List<Int> {
+        return santasNotAllowedRepository.getAllAllowed(id)
+    }
 }

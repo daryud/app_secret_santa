@@ -1,15 +1,27 @@
 package com.darin.amigooculto.service.repository.local
 
 import android.content.Context
+import androidx.room.Transaction
 import com.darin.amigooculto.service.repository.local.database.SecretSantaDatabase
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
+import com.darin.amigooculto.service.repository.local.databasemodels.SantaNotAllowedModel
 
 class ParticipantsRepository(context: Context) {
 
     private val database = SecretSantaDatabase.getDatabase(context).participantDAO()
+    private val databaseSantaNotAllowed = SecretSantaDatabase.getDatabase(context).santaNotAllowedDAO()
 
+    @Transaction
     fun insert(participant: ParticipantModel): Boolean {
-        return database.insert(participant) > 0
+        val participantId = database.insert(participant).toInt()
+        if (participantId > 0) {
+            val santaNotAllowed = SantaNotAllowedModel().apply {
+                this.participantId = participantId
+                this.notAllowedId = participantId
+            }
+            return databaseSantaNotAllowed.insert(santaNotAllowed) > 0
+        }
+        return false
     }
 
     fun update(participant: ParticipantModel): Boolean {

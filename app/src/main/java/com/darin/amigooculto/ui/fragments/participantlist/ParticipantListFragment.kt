@@ -1,7 +1,6 @@
 package com.darin.amigooculto.ui.fragments.participantlist
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import com.darin.amigooculto.databinding.FragmentParticipantListBinding
 import com.darin.amigooculto.service.models.objects.RaffledObject
 import com.darin.amigooculto.service.repository.local.databasemodels.ParticipantModel
 import com.darin.amigooculto.service.repository.local.databasemodels.SantaModel
-import com.darin.amigooculto.ui.MainActivity
 import com.darin.amigooculto.ui.fragments.participantlist.adapters.ParticipantListAdapter
 import com.darin.amigooculto.ui.fragments.participantlist.objects.ParticipantModelWithConstraints
 import com.darin.amigooculto.ui.fragments.participantlist.viewmodels.ParticipantListViewModel
@@ -104,95 +102,77 @@ class ParticipantListFragment : Fragment() {
         fragmentTransaction.commit()
     }
 
-    private fun generateValidPermutation(participantListWithConstraints: MutableList<ParticipantModelWithConstraints>, participantListWithConstraintsSize: Int): List<ParticipantModel>? {
+    private fun getDrawedSantas(participantList: List<ParticipantModel>): List<RaffledObject>? {
 
-        if(participantListWithConstraintsSize == 1) {
+        var participantListWithConstraints =  participantList.map {
+            ParticipantModelWithConstraints().apply {
+                this.id = it.id
+                this.name = it.name
+                this.constraints = viewModel.getListOfAllowed(it.id)
+            }
+        }.shuffled().sortedBy { participant -> participant.constraints.size }.toMutableList()
 
-            var proceed = true
+        val sortedIds = mutableListOf<Int>()
 
-            for (index in participantListWithConstraints.indices) {
-                if(index < participantListWithConstraints.size - 1) {
-                    if(participantListWithConstraints[index].constraints.contains(participantListWithConstraints[index + 1].id)) {
-                        proceed = false
-                        break
-                    }
+        fun reorganizeList() {
+            for (participant in participantListWithConstraints) {
+                participant.constraints = participant.constraints.filter { constraint -> !sortedIds.contains(constraint) }
+            }
+            participantListWithConstraints = participantListWithConstraints.sortedBy { participant -> participant.constraints.size }
+                .toMutableList()
+        }
+
+        val raffled = mutableListOf<RaffledObject>()
+
+        while (participantListWithConstraints.isNotEmpty()) {
+            reorganizeList()
+
+            val participant = participantListWithConstraints.removeFirst()
+
+            if (participant.constraints.isNotEmpty()) {
+                val sortedId = participant.constraints.random()
+
+                sortedIds.add(sortedId)
+
+                val sant = participantListWithConstraints.find { item -> item.id == sortedId }
+                if (sant != null) {
+                    sant.constraints = sant.constraints.filter { it != participant.id }
+                    raffled.add(RaffledObject(ParticipantModel().apply {
+                        this.id = participant.id
+                        this.name = participant.name
+                    }, ParticipantModel().apply {
+                        this.id = sant.id
+                        this.name = sant.name
+                    }))
                 } else {
-                    if(participantListWithConstraints[index].constraints.contains(participantListWithConstraints[0].id)) {
-                        proceed = false
-                        break
-                    }
+                    val santForAnotherList = participantList.find { item -> item.id == sortedId }!!
+                    raffled.add(RaffledObject(ParticipantModel().apply {
+                        this.id = participant.id
+                        this.name = participant.name
+                    }, ParticipantModel().apply {
+                        this.id = santForAnotherList.id
+                        this.name = santForAnotherList.name
+                    }))
                 }
-            }
 
-            return if(proceed) {
-                participantListWithConstraints.map {
-                    ParticipantModel().apply {
-                        this.id = it.id
-                        this.name = it.name
-                    }
-                }
-            } else {
-                null
             }
-
+            else return null
         }
 
-        for (index in 0..participantListWithConstraintsSize) {
-            val finalValue = generateValidPermutation(participantListWithConstraints, participantListWithConstraintsSize - 1)
-
-            if(finalValue != null) {
-                return  finalValue
-            }
-
-            if (participantListWithConstraintsSize % 2 == 1) {
-                val aux = participantListWithConstraints[0]
-                participantListWithConstraints[0] = participantListWithConstraints[participantListWithConstraintsSize - 1]
-                participantListWithConstraints[participantListWithConstraintsSize - 1] = aux
-            } else {
-                val aux = participantListWithConstraints[index]
-                participantListWithConstraints[index] = participantListWithConstraints[participantListWithConstraintsSize - 1]
-                participantListWithConstraints[participantListWithConstraintsSize - 1] = aux
-            }
-
-        }
-
-        return null
-
+        return raffled.sortedBy { it.participant.id }
     }
 
     private fun carryOutDraw(participantList: List<ParticipantModel>): Boolean {
 
-        val shuffledList: MutableList<ParticipantModel> = participantList.shuffled() as MutableList<ParticipantModel>
+        val drawedSantas = getDrawedSantas(participantList)
 
-        val validPermutation = generateValidPermutation(shuffledList.map {
-            ParticipantModelWithConstraints().apply {
-                this.id = it.id
-                this.name = it.name
-                this.constraints = viewModel.getListOfNotAllowed(it.id)
-            }
-        } as MutableList<ParticipantModelWithConstraints>, shuffledList.size)
-
-        val raffled = mutableListOf<RaffledObject>()
-
-        if(validPermutation != null) {
-
-            for (index in validPermutation.indices) {
-
-                if(index < validPermutation.size - 1) {
-                    raffled.add(RaffledObject(validPermutation[index], validPermutation[index + 1]))
-                } else {
-                    raffled.add(RaffledObject(validPermutation[index], validPermutation[0]))
-                }
-
-            }
-
-            val santaList = raffled.sortedBy { it.participant.id }.map {
+        if (drawedSantas != null) {
+            val santaList = drawedSantas.map {
                 SantaModel().apply {
                     this.participantId = it.participant.id
                     this.santaId = it.santa.id
                 }
             }
-
             return try {
                 viewModel.insertAllSantas(santaList)
                 true
@@ -200,12 +180,10 @@ class ParticipantListFragment : Fragment() {
                 Toast.makeText(requireActivity(), error.toString(), Toast.LENGTH_SHORT).show()
                 false
             }
-
         } else {
             Toast.makeText(requireActivity(), "Impossível sortear com as atuais restrições de amigos!", Toast.LENGTH_SHORT).show()
             return false
         }
-
     }
 
     companion object {

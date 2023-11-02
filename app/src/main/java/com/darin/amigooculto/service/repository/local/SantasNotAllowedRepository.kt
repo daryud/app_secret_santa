@@ -30,4 +30,8 @@ class SantasNotAllowedRepository(context: Context) {
         return database.getAllNotAllowed(participantId)
     }
 
+    fun getAllAllowed(participantId: Int): List<Int> {
+        return database.getAllAllowed(participantId)
+    }
+
 }
